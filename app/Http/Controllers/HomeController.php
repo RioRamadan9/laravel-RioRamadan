@@ -11,10 +11,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data ['username']        = 'rioramadan';
-        $data ['last_login']      = date('Y-m-d H:i:s');
-        $data ['list_pendidikan'] = ['SD','SMP','SMA','S1','S2','S3'];
-        return view('home', $data );
+        $data['username']        = 'rioramadan';
+        $data['last_login']      = date('Y-m-d H:i:s');
+        $data['list_pendidikan'] = ['SD', 'SMP', 'SMA', 'S1', 'S2', 'S3'];
+        return view('home', $data);
     }
 
     /**
@@ -63,5 +63,15 @@ class HomeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        // semua data form
+        dd($request->all());
+
+        // ambil spesifik input
+        $username = $request->input('username');
+        $password = $request->input('password');
     }
 }

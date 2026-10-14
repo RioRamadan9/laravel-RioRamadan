@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,11 +20,11 @@ Route::get('/mahasiswa', function () {
 });
 
 Route::get('/nama/{param1}', function ($param1) {
-    return 'Nama saya: '.$param1;
+    return 'Nama saya: ' . $param1;
 });
 
 Route::get('/nim/{param1?}', function ($param1 = '') {
-    return 'NIM saya: '.$param1;
+    return 'NIM saya: ' . $param1;
 });
 
 Route::get('/mahasiswa', function () {
@@ -37,3 +37,5 @@ Route::get('/about', function () {
     return view('halaman-about');
 });
 
+Route::post('question/store', [QuestionController::class, 'store'])
+->name('question.store');
