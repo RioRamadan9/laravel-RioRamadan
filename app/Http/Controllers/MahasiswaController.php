@@ -37,7 +37,7 @@ class MahasiswaController extends Controller
     {
         if($param1 == 'detail'){
             return view('halaman-mahasiswa-detail');
-        }else if($param1 == 'profil'){
+        } else if($param1 == 'profil'){
             return view('halaman-mahasiswa-profil');
         }
     }

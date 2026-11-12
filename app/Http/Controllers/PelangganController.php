@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Pelanggan;
 
 use Illuminate\Http\Request;
-use App\Models\Pelanggan;
 
 class PelangganController extends Controller
 {
@@ -12,8 +12,10 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $data['dataPelanggan'] = Pelanggan::all();
-        return view('admin.pelanggan.index', $data);
+        $dataPelanggan = Pelanggan::all();
+
+    // Kirim variabel $dataPelanggan ke view
+        return view('admin.pelanggan.index', compact('dataPelanggan'));
     }
 
     /**
@@ -21,7 +23,7 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        return view('admin.pelanggan.create');
+		return view('admin.pelanggan.create');
     }
 
     /**
@@ -29,17 +31,16 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $data['first_name'] = $request->first_name;
-        $data['last_name'] = $request->last_name;
-        $data['birthday'] = $request->birthday;
-        $data['gender'] = $request->gender;
-        $data['email'] = $request->email;
-        $data['phone'] = $request->phone;
+        $data['last_name']  = $request->last_name;
+        $data['birthday']   = $request->birthday;
+        $data['gender']     = $request->gender;
+        $data['email']      = $request->email;
+        $data['phone']      = $request->phone;
 
         Pelanggan::create($data);
 
-        return redirect()->route('pelanggan.index')->with('success', 'Penambahan Data Berhasil!');
+        dd("Data Berhasil Disimpan ke Database!", $data);
     }
 
     /**
@@ -47,7 +48,13 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dataPelanggan = Pelanggan::find($id);
+
+        if (!$dataPelanggan) {
+            return "Data tidak ditemukan";
+        }
+
+        return "Data ditemukan: " . $dataPelanggan->first_name;
     }
 
     /**
@@ -64,17 +71,17 @@ class PelangganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $pelanggan_id = $id;
-        $pelanggan = Pelanggan::findOrFail($pelanggan_id);
+        $dataPelanggan = Pelanggan::findOrFail($id);
 
-        $pelanggan->first_name = $request->first_name;
-        $pelanggan->last_name = $request->last_name;
-        $pelanggan->birthday = $request->birthday;
-        $pelanggan->gender = $request->gender;
-        $pelanggan->email = $request->email;
-        $pelanggan->phone = $request->phone;
+        $dataPelanggan->first_name = $request->first_name;
+        $dataPelanggan->last_name  = $request->last_name;
+        $dataPelanggan->birthday   = $request->birthday;
+        $dataPelanggan->gender     = $request->gender;
+        $dataPelanggan->email      = $request->email;
+        $dataPelanggan->phone      = $request->phone;
 
-        $pelanggan->save();
+        $dataPelanggan->save();
+
         return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
     }
 
@@ -83,6 +90,9 @@ class PelangganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataPelanggan = Pelanggan::findOrFail($id);
+        $dataPelanggan->delete();
+
+        return redirect()->route('pelanggan.index')->with('success', 'Penghapusan Data Berhasil!');
     }
 }

@@ -57,8 +57,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">My Laravel App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -93,13 +92,43 @@
     <section id="content" class="container ">
         <div class="row">
             <div class="col-md-6">
+                {{-- Form Submit Data --}}
+                <div class="card mb-4">
+                     <div class="card-body">
+                         <h5 class="card-title">Form Pertanyaan</h5>
+                         @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('question.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                             </div>
+                            <div class="mb-3">
+                                <label for="pertanyaan" class="form-label">Pertanyaan</label>
+                                <textarea class="form-control" id="pertanyaan" name="pertanyaan" rows="4">{{ old('pertanyaan') }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
+                        </form>
+                    </div>
+                </div>
                 {{-- About --}}
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">About Our Application</h5>
-                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to
-                            navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers
-                            flexibility and responsiveness.</p>
+                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers flexibility and responsiveness.</p>
                         <a href="#" class="btn btn-primary">Explore More</a>
                     </div>
                 </div>
@@ -108,13 +137,11 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                                 About Us
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show"
-                            data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 We are a tech company that specializes in web development solutions.
                             </div>
@@ -122,8 +149,7 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
                                 Our Services
                             </button>
                         </h2>
@@ -139,21 +165,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="h5 mb-3">Badges, List, &amp; Card</h3>
-
-                        <form action="{{ url('question/store') }}" method="POST">
-                            @csrf
-
-                            <div class="mb-3">
-                                <input type="text" name="username" class="form-control" placeholder="Username">
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="password" name="password" class="form-control" placeholder="Password">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100">Submit</button>
-                        </form>
-
                         <div class="mb-3">
                             <span class="badge text-bg-primary">Web Dev</span>
                             <span class="badge text-bg-success">Laravel</span>
@@ -175,38 +186,6 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Form Pertanyaan</h5>
-
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form action="{{ route('question.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label">Name</label>
-                                <input type="text" name="nama" class="form-control" value="{{ old('nama') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" value="{{ old('email') }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Pertanyaan</label>
-                                <textarea name="pertanyaan" class="form-control" rows="3">{{ old('pertanyaan') }}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
-                        </form>
-                    </div>
-                </div>
                 {{-- Alerts --}}
                 <div class="card ">
                     <div class="card-body">
@@ -268,9 +247,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau
-                            <code>.table-bordered</code> sesuai kebutuhan.
-                        </p>
+                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau <code>.table-bordered</code> sesuai kebutuhan.</p>
                     </div>
                 </div>
             </div>
@@ -280,32 +257,31 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{ date('Y') }} My Laravel App. All Rights Reserved.</p>
+            <p>&copy; {{date('Y')}} My Laravel App. All Rights Reserved.</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        });
+    <!-- jQuery CDN (Dibutuhkan untuk $.ajax) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Skrip Ajax (Materi Modul) -->
+    <script>
         $.ajax({
             url: 'auth/login',
             method: 'POST',
             data: {
+                _token: '{{ csrf_token() }}',
                 username: 'john',
                 password: '12345'
             },
             success: function(response) {
-                console.log('Data submitted successfully', response);
+                console.log('Data submitted successfully');
             },
             error: function(xhr, status, error) {
-                console.log('Error occurred', error);
+                console.log('Error occurred: ' + error);
             }
         });
     </script>
